@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Aniversário, Phamyla 🎁</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* ── PARTICLES ── */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float-up linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float-up {
+      0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-40px) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── GIFT SCENE ── */
+    .scene-wrap {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      z-index: 10;
+      transition: opacity 0.5s ease;
+    }
+
+    .scene-wrap.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gift-box {
+      position: relative;
+      cursor: pointer;
+      animation: gentle-float 3s ease-in-out infinite;
+      transition: transform 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .gift-box:hover { transform: scale(1.05); }
+    .gift-box:active { transform: scale(0.97); }
+
+    .gift-box.opening {
+      animation: none !important;
+      transform: none !important;
+    }
+
+    @keyframes gentle-float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    /* Lid */
+    .box-lid {
+      width: 220px;
+      height: 55px;
+      background: linear-gradient(135deg, #c9a84c 0%, #f0d060 50%, #c9a84c 100%);
+      border-radius: 8px 8px 0 0;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+      transform-origin: top center;
+      border: 1px solid #a8892a;
+      box-shadow: inset 0 3px 10px rgba(255,255,200,0.25);
+    }
+
+    .gift-box.opening .box-lid {
+      transform: rotateX(-130deg) translateY(-20px);
+      opacity: 0;
+    }
+
+    /* Body */
+    .box-body {
+      width: 220px;
+      height: 180px;
+      background: linear-gradient(135deg, #b8922a 0%, #e8c040 50%, #b8922a 100%);
+      border-radius: 0 0 10px 10px;
+      position: relative;
+      border: 1px solid #9a7a20;
+      border-top: none;
+      box-shadow:
+        inset 0 -6px 16px rgba(0,0,0,0.25),
+        6px 12px 32px rgba(0,0,0,0.55);
+      overflow: hidden;
+    }
+
+    .box-shine {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255,255,200,0.18) 0%, transparent 55%);
+    }
+
+    /* Ribbons */
+    .ribbon-v {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      background: linear-gradient(90deg, #8b6914, #f5d050, #8b6914);
+      z-index: 3;
+    }
+
+    .ribbon-h {
+      position: absolute;
+      left: -12px; right: -12px;
+      height: 24px;
+      background: linear-gradient(180deg, #8b6914, #f5d050, #8b6914);
+      z-index: 3;
+    }
+
+    .ribbon-h.lid-band   { top: 50%; transform: translateY(-50%); }
+    .ribbon-h.body-band  { top: 0; }
+
+    /* Bow */
+    .bow {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 100px;
+      height: 50px;
+      transition: transform 0.7s ease, opacity 0.5s ease;
+    }
+
+    .gift-box.opening .bow {
+      transform: translateX(-50%) translateY(-80px) scale(0.4) rotate(15deg);
+      opacity: 0;
+    }
+
+    .bow-loop {
+      position: absolute;
+      width: 42px;
+      height: 28px;
+      border: 6px solid #d4af37;
+      border-radius: 50%;
+      top: 10px;
+    }
+    .bow-loop.left  { left: 0;  transform: rotate(-35deg); }
+    .bow-loop.right { right: 0; transform: rotate(35deg);  }
+
+    .bow-center {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #f8e878, #c9a840);
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      box-shadow: 0 0 8px rgba(201,168,64,0.6);
+    }
+
+    /* Hint */
+    .hint {
+      margin-top: 28px;
+      color: #c9a840;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1;   }
+    }
+
+    /* ── CARD OVERLAY ── */
+    .card-overlay {
+      position: fixed;
+      inset: 0;
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.9s ease 0.5s;
+      overflow-y: auto;
+    }
+
+    .card-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .letter {
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      transform: translateY(40px);
+      transition: transform 0.9s ease 0.7s;
+      padding: 1rem 0 2rem;
+    }
+
+    .card-overlay.visible .letter {
+      transform: translateY(0);
+    }
+
+    .letter-deco {
+      color: #c9a840;
+      font-size: 22px;
+      letter-spacing: 0.4em;
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+
+    .letter-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      color: #c9a840;
+      font-size: clamp(15px, 4vw, 18px);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .letter-name {
+      font-family: 'Cormorant Garamond', serif;
+      color: #f5e070;
+      font-size: clamp(38px, 12vw, 62px);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      margin-bottom: 2.2rem;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 2.2rem;
+    }
+
+    .divider-line {
+      flex: 1;
+      max-width: 70px;
+      height: 1px;
+    }
+
+    .divider-line.left  { background: linear-gradient(90deg, transparent, #c9a840); }
+    .divider-line.right { background: linear-gradient(90deg, #c9a840, transparent); }
+
+    .divider-gem {
+      width: 7px;
+      height: 7px;
+      background: #c9a840;
+      transform: rotate(45deg);
+    }
+
+    .letter-text {
+      font-family: 'Cormorant Garamond', serif;
+      color: #e8d5a0;
+      font-size: clamp(17px, 4.5vw, 21px);
+      font-weight: 300;
+      line-height: 2;
+      font-style: italic;
+      margin-bottom: 2.4rem;
+    }
+
+    .letter-sign {
+      font-family: 'Cormorant Garamond', serif;
+      color: #c9a840;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      opacity: 0.85;
+    }
+
+    .heart-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .heart {
+      color: #c9a840;
+      font-size: 16px;
+      display: inline-block;
+      animation: heartbeat 1.6s ease-in-out infinite;
+    }
+    .heart:nth-child(2) { animation-delay: 0.3s; }
+    .heart:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1);    opacity: 0.55; }
+      50%       { transform: scale(1.35); opacity: 1;    }
+    }
+
+    /* ── CONFETTI ── */
+    .confetti-piece {
+      position: fixed;
+      top: -14px;
+      pointer-events: none;
+      z-index: 200;
+      animation: confetti-fall linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      0%   { transform: translateY(0)     rotate(0deg);   opacity: 1;   }
+      80%  { opacity: 1; }
+      100% { transform: translateY(110vh) rotate(900deg); opacity: 0;   }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Gift scene -->
+  <div class="scene-wrap" id="sceneWrap">
+    <div class="gift-box" id="giftBox" onclick="openGift()">
+      <!-- Bow -->
+      <div class="bow">
+        <div class="bow-loop left"></div>
+        <div class="bow-loop right"></div>
+        <div class="bow-center"></div>
+      </div>
+
+      <!-- Lid -->
+      <div class="box-lid">
+        <div class="ribbon-h lid-band"></div>
+        <div class="ribbon-v"></div>
+      </div>
+
+      <!-- Body -->
+      <div class="box-body">
+        <div class="box-shine"></div>
+        <div class="ribbon-h body-band"></div>
+        <div class="ribbon-v"></div>
+      </div>
+    </div>
+
+    <div class="hint">toque para abrir</div>
+  </div>
+
+  <!-- Card overlay -->
+  <div class="card-overlay" id="cardOverlay">
+    <div class="letter">
+      <div class="letter-deco">✦ &nbsp; ✦ &nbsp; ✦</div>
+      <div class="letter-subtitle">Feliz aniversário,</div>
+      <div class="letter-name">Phamyla</div>
+
+      <div class="divider">
+        <div class="divider-line left"></div>
+        <div class="divider-gem"></div>
+        <div class="divider-line right"></div>
+      </div>
+
+      <div class="letter-text">
+        
+
+Hoje não te escrevo como o meu amor, redijo estas palavras à você como pessoa. Eu vejo você, mais do que te olhar, eu te enxergo, em cada palavra, em cada sorriso eu sinto quem você é, sinto toda a bondade que existe em você. Existe em você a alma mais pura e bela que eu já conheci, eu desacreditava que pudesse existir algum assim como você. Hoje o dia é especial, pois é o dia em que o planeta recebeu você, agraciado é o dia que pode dizer "ela nasceu em mim". Você é digna de tudo e mais ainda. Estar com você é uma benção de Deus. Eu não só quero te "desejar tudo de bom" por que isso seria pouco, eu não só desejo, mas te prometo o mundo inteiro. Não porque eu o possua, mas porque com você, eu sou capaz de conquistá-lo.
+
+Que hoje seja um dia maravilhoso, cheio de alegria e felicidade, assim como todos os dias seguintes, até o fim de nossas vidas
+
+Feliz aniversário meu amor
+
+        ,<br>
+        e eu tive a sorte de ser iluminado por ela.<br><br>
+        Que este dia seja tão especial<br>
+        quanto você é para mim —<br>
+        todos os dias, sem exceção.<br><br>
+        Te amo mais do que as palavras sabem dizer.
+      </div>
+
+      <div class="letter-sign">Com todo o meu amor, seu N. &nbsp;♾</div>
+
+      <div class="heart-row">
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Ambient particles ──
+    const goldColors = ['#f5e070','#c9a840','#f0d060','#e8c040','#fff8dc','#d4af37','#faf0a0'];
+
+    (function createParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 22; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 4 + 1;
+        p.style.cssText = `
+          width: ${size}px;
+          height: ${size}px;
+          left: ${Math.random() * 100}%;
+          background: ${goldColors[Math.floor(Math.random() * goldColors.length)]};
+          animation-duration: ${Math.random() * 9 + 7}s;
+          animation-delay: ${Math.random() * 8}s;
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    // ── Confetti burst ──
+    function launchConfetti() {
+      for (let i = 0; i < 55; i++) {
+        setTimeout(() => {
+          const c = document.createElement('div');
+          c.className = 'confetti-piece';
+          const size = Math.random() * 9 + 4;
+          const isCircle = Math.random() > 0.5;
+          c.style.cssText = `
+            left: ${Math.random() * 100}vw;
+            width: ${size}px;
+            height: ${size}px;
+            background: ${goldColors[Math.floor(Math.random() * goldColors.length)]};
+            border-radius: ${isCircle ? '50%' : '2px'};
+            animation-duration: ${Math.random() * 2 + 2.5}s;
+            animation-delay: ${Math.random() * 0.6}s;
+            transform: rotate(${Math.random() * 360}deg);
+          `;
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 5000);
+        }, i * 35);
+      }
+    }
+
+    // ── Open gift ──
+    function openGift() {
+      const box     = document.getElementById('giftBox');
+      const scene   = document.getElementById('sceneWrap');
+      const overlay = document.getElementById('cardOverlay');
+
+      box.classList.add('opening');
+      launchConfetti();
+
+      setTimeout(() => {
+        scene.classList.add('hidden');
+        overlay.classList.add('visible');
+      }, 950);
+    }
+  </script>
+</body>
+</html>
